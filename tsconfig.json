@@ -23,11 +23,12 @@
       "vite-plugin-vue-component-preview/client",
       "vite-plugin-vue-layouts/client",
       "vite-plugin-pwa/client",
-      "unplugin-vue-macros/macros-global"
+      "unplugin-vue-macros/macros-global",
+      "pinia-plugin-persist"
     ],
     "paths": {
       "~/*": ["src/*"]
-    },
+    }
   },
   "vueCompilerOptions": {
     "plugins": [
