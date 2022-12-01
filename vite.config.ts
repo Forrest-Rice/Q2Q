@@ -2,7 +2,7 @@
  * @Author: BY by15242952083@outlook.com
  * @Date: 2022-11-30 16:34:35
  * @LastEditors: BY by15242952083@outlook.com
- * @LastEditTime: 2022-12-01 15:44:22
+ * @LastEditTime: 2022-12-01 20:34:07
  * @FilePath: \Q2Q\vite.config.ts
  * @Description:
  * Copyright (c) 2022 by BY email: by15242952083@outlook.com, All Rights Reserved.
@@ -36,6 +36,8 @@ import ViteRestart from 'vite-plugin-restart'
 import Preview from 'vite-plugin-vue-component-preview'
 import { viteZip } from 'vite-plugin-zip-file'
 import basicSsl from '@vitejs/plugin-basic-ssl'
+import VueMacros from 'unplugin-vue-macros/vite'
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 const markdownWrapperClasses = 'prose prose-sm m-auto text-left'
@@ -55,14 +57,13 @@ export default defineConfig({
 
   resolve: { alias: { '~/': `${path.resolve(__dirname, 'src')}/` } },
   plugins: [
-    vue({
-      include: [/\.vue$/, /\.md$/],
-      reactivityTransform: true,
-    }),
+    vue({ include: [/\.vue$/, /\.md$/], reactivityTransform: true }),
+
+    VueMacros({ plugins: { vue: vue({ include: [/\.vue$/, /\.md$/], reactivityTransform: true }) } }),
 
     Preview(),
 
-    Pages({ extensions: ['vue', 'md'] }),
+    Pages({ extensions: ['vue', 'md'], exclude: ['**/components/*.vue'] }),
 
     Layouts({ layoutsDirs: 'src/layouts', defaultLayout: 'BYY' }),
 

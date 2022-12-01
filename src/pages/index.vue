@@ -1,3 +1,3 @@
 <template>
-  aaaaaaa111
+  <hello-world />
 </template>
