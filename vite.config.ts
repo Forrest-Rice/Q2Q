@@ -2,7 +2,7 @@
  * @Author: BY by15242952083@outlook.com
  * @Date: 2022-11-30 16:34:35
  * @LastEditors: BY by15242952083@outlook.com
- * @LastEditTime: 2022-11-30 20:08:10
+ * @LastEditTime: 2022-12-01 15:44:22
  * @FilePath: \Q2Q\vite.config.ts
  * @Description:
  * Copyright (c) 2022 by BY email: by15242952083@outlook.com, All Rights Reserved.
@@ -189,11 +189,5 @@ export default defineConfig({
     postcss: { plugins: [loader_pxToRem, loader_autoPreFixer] },
   },
 
-  server: {
-    port: 12138,
-    strictPort: true,
-    open: true,
-    https: true,
-    hmr: true,
-  },
+  server: { port: 12138, strictPort: true, open: true, https: true, hmr: true },
 })
