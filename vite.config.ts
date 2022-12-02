@@ -2,7 +2,7 @@
  * @Author: BY by15242952083@outlook.com
  * @Date: 2022-11-30 16:34:35
  * @LastEditors: BY by15242952083@outlook.com
- * @LastEditTime: 2022-12-01 20:34:07
+ * @LastEditTime: 2022-12-02 15:31:02
  * @FilePath: \Q2Q\vite.config.ts
  * @Description:
  * Copyright (c) 2022 by BY email: by15242952083@outlook.com, All Rights Reserved.
@@ -57,10 +57,16 @@ export default defineConfig({
 
   resolve: { alias: { '~/': `${path.resolve(__dirname, 'src')}/` } },
   plugins: [
-    vue({ include: [/\.vue$/, /\.md$/], reactivityTransform: true }),
+    // vue({ include: [/\.vue$/, /\.md$/], reactivityTransform: true }),
 
-    VueMacros({ plugins: { vue: vue({ include: [/\.vue$/, /\.md$/], reactivityTransform: true }) } }),
-
+    // 通过 HMR 提供 Vue 3 JSX 和 TSX 支持。 https://github.com/vitejs/vite/tree/main/packages/plugin-vue-jsx
+    // 探索并扩充更多宏和语法糖到 Vue。 --- https://github.com/sxzz/unplugin-vue-macros/blob/main/README-zh-CN.md
+    VueMacros({
+      plugins: {
+        vue: vue({ include: [/\.vue$/, /\.md$/], reactivityTransform: true }),
+        vueJsx: vueJsx({ exclude: /(node_module)/ }),
+      },
+    }),
     Preview(),
 
     Pages({ extensions: ['vue', 'md'], exclude: ['**/components/*.vue'] }),
@@ -152,9 +158,9 @@ export default defineConfig({
     }),
 
     // 通过 HMR 提供 Vue 3 JSX 和 TSX 支持。 https://github.com/vitejs/vite/tree/main/packages/plugin-vue-jsx
-    vueJsx({
-      exclude: /(node_module)/,
-    }),
+    // vueJsx({
+    //   exclude: /(node_module)/,
+    // }),
 
     // 提供自动重启服务器功能  https://github.com/antfu/vite-plugin-restart
     viteRestartValue,
