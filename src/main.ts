@@ -2,9 +2,9 @@
  * @Author: BY by15242952083@outlook.com
  * @Date: 2022-11-30 16:34:35
  * @LastEditors: BY by15242952083@outlook.com
- * @LastEditTime: 2022-12-01 17:40:42
+ * @LastEditTime: 2022-12-16 17:51:21
  * @FilePath: \Q2Q\src\main.ts
- * @Description:
+ * @Description: main
  * Copyright (c) 2022 by BY email: by15242952083@outlook.com, All Rights Reserved.
  */
 import { ViteSSG } from 'vite-ssg'
@@ -17,8 +17,6 @@ import 'normalize.css/normalize.css'
 import './styles/css/main.css'
 import 'uno.css'
 
-setDomFontSize()
-
 const routes = setupLayouts(generatedRoutes)
 
 // https://github.com/antfu/vite-ssg
@@ -30,5 +28,7 @@ export const createApp = ViteSSG(
     Object.values(import.meta.glob<{ install: UserModule }>('./modules/*.ts', { eager: true }))
       .forEach(i => i.install?.(ctx))
     ctx.app.use(Previewer)
+    setRouter(ctx.router)
+    setDomFontSize()
   },
 )

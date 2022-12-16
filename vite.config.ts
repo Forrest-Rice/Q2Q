@@ -2,7 +2,7 @@
  * @Author: BY by15242952083@outlook.com
  * @Date: 2022-11-30 16:34:35
  * @LastEditors: BY by15242952083@outlook.com
- * @LastEditTime: 2022-12-02 15:31:02
+ * @LastEditTime: 2022-12-16 18:49:31
  * @FilePath: \Q2Q\vite.config.ts
  * @Description:
  * Copyright (c) 2022 by BY email: by15242952083@outlook.com, All Rights Reserved.
@@ -25,7 +25,7 @@ import Markdown from 'vite-plugin-md'
 import Prism from 'markdown-it-prism'
 import LinkAttributes from 'markdown-it-link-attributes'
 import { VitePWA } from 'vite-plugin-pwa'
-import VueI18n from '@intlify/vite-plugin-vue-i18n'
+import VueI18nPlugin from '@intlify/unplugin-vue-i18n/vite'
 import Icons from 'unplugin-icons/vite'
 import Inspect from 'vite-plugin-inspect'
 import pxToRem from 'postcss-pxtorem'
@@ -35,8 +35,9 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 import ViteRestart from 'vite-plugin-restart'
 import Preview from 'vite-plugin-vue-component-preview'
 import { viteZip } from 'vite-plugin-zip-file'
-import basicSsl from '@vitejs/plugin-basic-ssl'
+// import basicSsl from '@vitejs/plugin-basic-ssl'
 import VueMacros from 'unplugin-vue-macros/vite'
+// import mkcert from 'vite-plugin-mkcert'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
@@ -92,7 +93,7 @@ export default defineConfig({
         { mock: [['default', 'Mock']] },
       ],
       dts: 'src/auto-imports.d.ts',
-      dirs: ['src/composables', 'src/store', 'src/utils'],
+      dirs: ['src/composables', 'src/store', 'src/api', 'src/utils', 'src/router'],
       vueTemplate: true,
       resolvers: [IconsResolver({ prefix: 'Icon' }), ElementPlusResolver()],
     }),
@@ -139,11 +140,7 @@ export default defineConfig({
       },
     }),
 
-    VueI18n({
-      runtimeOnly: true,
-      compositionOnly: true,
-      include: [path.resolve(__dirname, 'locales/**')],
-    }),
+    VueI18nPlugin({ /* options */ }),
 
     Icons({
       compiler: 'vue3',
@@ -174,7 +171,8 @@ export default defineConfig({
     }),
 
     // 提供Https功能，自动创建和缓存一个自签名的证书 https://github.com/vitejs/vite-plugin-basic-ssl
-    basicSsl(),
+    // basicSsl(),
+    // mkcert(),
   ],
 
   ssgOptions: {
@@ -196,5 +194,16 @@ export default defineConfig({
     postcss: { plugins: [loader_pxToRem, loader_autoPreFixer] },
   },
 
-  server: { port: 12138, strictPort: true, open: true, https: true, hmr: true },
+  server: {
+    // port: 12138,
+    strictPort: true,
+    open: true,
+    // https: {
+    //   key: fs.readFileSync('./keys/agent2-key.pem'),
+    //   cert: fs.readFileSync('./keys/agent2-cert.pem'),
+    // },
+
+    https: false,
+    hmr: true,
+  },
 })
