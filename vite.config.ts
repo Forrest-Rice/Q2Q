@@ -2,7 +2,7 @@
  * @Author: BY by15242952083@outlook.com
  * @Date: 2022-11-30 16:34:35
  * @LastEditors: BY by15242952083@outlook.com
- * @LastEditTime: 2022-12-02 15:31:02
+ * @LastEditTime: 2022-12-16 14:19:10
  * @FilePath: \Q2Q\vite.config.ts
  * @Description:
  * Copyright (c) 2022 by BY email: by15242952083@outlook.com, All Rights Reserved.
@@ -25,7 +25,6 @@ import Markdown from 'vite-plugin-md'
 import Prism from 'markdown-it-prism'
 import LinkAttributes from 'markdown-it-link-attributes'
 import { VitePWA } from 'vite-plugin-pwa'
-import VueI18n from '@intlify/vite-plugin-vue-i18n'
 import Icons from 'unplugin-icons/vite'
 import Inspect from 'vite-plugin-inspect'
 import pxToRem from 'postcss-pxtorem'
@@ -37,6 +36,7 @@ import Preview from 'vite-plugin-vue-component-preview'
 import { viteZip } from 'vite-plugin-zip-file'
 import basicSsl from '@vitejs/plugin-basic-ssl'
 import VueMacros from 'unplugin-vue-macros/vite'
+import VueI18nPlugin from '@intlify/unplugin-vue-i18n/vite'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
@@ -139,11 +139,7 @@ export default defineConfig({
       },
     }),
 
-    VueI18n({
-      runtimeOnly: true,
-      compositionOnly: true,
-      include: [path.resolve(__dirname, 'locales/**')],
-    }),
+    VueI18nPlugin({ /* options */ }),
 
     Icons({
       compiler: 'vue3',
@@ -196,5 +192,5 @@ export default defineConfig({
     postcss: { plugins: [loader_pxToRem, loader_autoPreFixer] },
   },
 
-  server: { port: 12138, strictPort: true, open: true, https: true, hmr: true },
+  server: { port: 12138, strictPort: true, open: true, https: false, hmr: true },
 })
