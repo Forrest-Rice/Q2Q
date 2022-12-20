@@ -2,7 +2,7 @@
  * @Author: BY by15242952083@outlook.com
  * @Date: 2022-11-30 16:34:35
  * @LastEditors: BY by15242952083@outlook.com
- * @LastEditTime: 2022-12-16 18:49:31
+ * @LastEditTime: 2022-12-20 20:33:28
  * @FilePath: \Q2Q\vite.config.ts
  * @Description:
  * Copyright (c) 2022 by BY email: by15242952083@outlook.com, All Rights Reserved.
@@ -38,7 +38,7 @@ import { viteZip } from 'vite-plugin-zip-file'
 // import basicSsl from '@vitejs/plugin-basic-ssl'
 import VueMacros from 'unplugin-vue-macros/vite'
 // import mkcert from 'vite-plugin-mkcert'
-
+import { ElementPlusResolve, createStyleImportPlugin } from 'vite-plugin-style-import'
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 const markdownWrapperClasses = 'prose prose-sm m-auto text-left'
@@ -173,6 +173,17 @@ export default defineConfig({
     // 提供Https功能，自动创建和缓存一个自签名的证书 https://github.com/vitejs/vite-plugin-basic-ssl
     // basicSsl(),
     // mkcert(),
+
+    createStyleImportPlugin({
+      resolves: [ElementPlusResolve()],
+      libs: [{
+        libraryName: 'element-plus',
+        esModule: true,
+        resolveStyle: (name: string) => { return `element-plus/theme-chalk/${name}.css` },
+      }],
+    }),
+
+    // terser(),
   ],
 
   ssgOptions: {
@@ -189,7 +200,7 @@ export default defineConfig({
 
   css: {
     preprocessorOptions: {
-      scss: { additionalData: '@import \'~/assets/scss/mixin.scss\';' },
+      scss: { additionalData: '@import \'~/styles/scss/mixin.scss\';' },
     },
     postcss: { plugins: [loader_pxToRem, loader_autoPreFixer] },
   },

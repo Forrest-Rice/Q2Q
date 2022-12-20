@@ -1,14 +1,4 @@
-import {
-  defineConfig,
-  toEscapedSelector as e,
-  presetAttributify,
-  presetIcons,
-  presetTypography,
-  presetUno,
-  presetWebFonts,
-  transformerDirectives,
-  transformerVariantGroup,
-} from 'unocss'
+import { defineConfig, presetAttributify, presetIcons, presetTypography, presetUno, presetWebFonts, transformerDirectives, transformerVariantGroup } from 'unocss'
 
 export default defineConfig({
   shortcuts: [
@@ -34,6 +24,17 @@ export default defineConfig({
       const w = numReg.test(a) ? `${a}%` : a
       return { width: w }
     }],
+    [/^h-calc-(\w+)-(\w+)$/, ([, a, b]) => {
+      const numReg = /^((?![A-Za-z]).)*$/
+      const heightArr = [a, b].map(e => numReg.test(e) ? `${e}%` : e)
+      return { height: `calc(${heightArr[0]} - ${heightArr[1]})` }
+    }],
+    [/^w-calc-(\w+)-(\w+)$/, ([, a, b]) => {
+      const numReg = /^((?![A-Za-z]).)*$/
+      const widthArr = [a, b].map(e => numReg.test(e) ? `${e}%` : e)
+      return { width: `calc(${widthArr[0]} - ${widthArr[1]})` }
+    }],
+
     [/^p-(\w+)-(\w+)?-?(\w+)?-?(\w+)?$/, ([, t, r, b, l]) => {
       const effectiveArr = [t, r, b, l].filter(e => e)
       const numReg = /^((?![A-Za-z]).)*$/
@@ -46,6 +47,7 @@ export default defineConfig({
       const marginList = effectiveArr.map(e => numReg.test(e) ? `${e}%` : e)
       return effectiveArr.length === 0 ? { margin: '0px' } : { margin: marginList.join(' ') }
     }],
+
     ['fr-b', { 'display': 'flex', 'justify-content': 'space-between' }],
     ['fr-c', { 'display': 'flex', 'justify-content': 'center' }],
     ['fr-e', { 'display': 'flex', 'justify-content': 'flex-end' }],
@@ -66,72 +68,39 @@ export default defineConfig({
     ['ela-b', { 'align-content': 'space-between;' }],
     ['ela-a', { 'align-content': 'space-around;' }],
     ['f-w', { 'flex-wrap': 'wrap' }],
-    [/^fx-(\w+)-(\d+)?-?(\w+)?$/, ([, g, s, b]) => ({ flex: `${g},${s},${b}` })],
+    [/^fx-(\w+)-?(\d+)?-?(\w+)?$/, ([, g, s, b]) => {
+      const fxArr = [g, s, b].filter(e => e)
+      return { flex: fxArr.join(',') }
+    }],
 
     [/^fs-(\d+)$/, ([, d]) => ({ 'font-size': `${d}px` })],
     [/^lh-(\d+)$/, ([, d]) => ({ 'line-height': `${d}px` })],
     [/^fw-(\d+)$/, ([, d]) => ({ 'font-weight': `${d}` })],
     [/^fw-(\d+)$/, ([, d]) => ({ 'font-weight': `${d}` })],
 
-    [/^position-(\w+)$/, ([, w]) => ({ position: `${w}` })],
-    ['po-r', { position: 'relative' }],
-    ['po-a', { position: 'absolute' }],
-    [/^pot-(\d+)$/, ([, d]) => ({ top: `${d}px` })],
-    [/^pob-(\d+)$/, ([, d]) => ({ bottom: `${d}px` })],
-    [/^pol-(\d+)$/, ([, d]) => ({ left: `${d}px` })],
-    [/^por-(\d+)$/, ([, d]) => ({ right: `${d}px` })],
-    [/^potPE-(\d+)$/, ([, d]) => ({ top: `${d}%` })],
-    [/^pobPE-(\d+)$/, ([, d]) => ({ bottom: `${d}%` })],
-    [/^polPE-(\d+)$/, ([, d]) => ({ left: `${d}%` })],
-    [/^porPE-(\d+)$/, ([, d]) => ({ right: `${d}%` })],
+    [/^po-(\w+)$/, ([, w]) => {
+      const positionMap = new Map().set('r', 'relative').set('a', 'absolute').set('s', 'sticky').set('f', 'fixed')
+      const positionFlag = positionMap.has(w)
+      return positionFlag ? { position: positionMap.get(w) } : { position: w }
+    }],
+    [/^po-(t|l|b|r+)-(\w+)$/, ([, a, b]) => {
+      const numReg = /^((?![A-Za-z]).)*$/
+      const directionMap = new Map().set('t', 'top').set('b', 'bottom').set('r', 'right').set('l', 'left')
+      return numReg.test(b) ? { [directionMap.get(a)]: `${b}%` } : { [directionMap.get(a)]: b }
+    }],
 
     [/^bw-(\d+)$/, ([, d]) => ({ 'border-width': `${d}px` })],
     [/^bs-(\w+)$/, ([, w]) => ({ 'border-style': `${w}` })],
     [/^br-(\d+)$/, ([, d]) => ({ ' border-radius': `${d}px` })],
-
-    ['cursor-p', { cursor: 'pointer' }],
-
-    ['Heiti', { 'font-family': 'Adobe Heiti Std' }],
-
-    [/^font-(.+)-(\d+)-(\w+)-(.+)$/, ([, ff, fs, fw, fc], { rawSelector }) => {
-      const selector = e(rawSelector)
-      const styleArr = { 'font-size': `${fs}px`, 'font-weight': fw, 'font-family': ff, 'color': `#${fc}` }
-
-      let temp = ''
-      for (const [key, value] of Object.entries(styleArr))
-        temp += `${key}: ${value};`
-
-      return `${selector}{${temp}}`
-    }],
-    ['pop-content-span', {
-      ' font-size': '21px',
-      'font-family': 'Adobe Heiti Std',
-      'font-weight': 'normal',
-      'color': ' #FFFFFF',
-      'display': 'flex',
-      'align-items': 'center',
-
-      'background': 'linear-gradient(0deg, rgba(21, 244, 236, 0.41) 0%, #FFFFFF 100%)',
-      '-webkit-background-clip': 'text',
-      '-webkit-text-fill-color': 'transparent',
-    }],
-
-    [/^padding-(\w+)-(\w+)?-?(\w+)?-?(\w+)?$/, ([, t, r, b, l]) => {
-      const effectiveArr = [t, r, b, l].filter(e => e)
-      const numReg = /^((?![A-Za-z]).)*$/
-      const paddingList = effectiveArr.map(e => numReg.test(e) ? `${e}%` : e)
-
-      return effectiveArr.length === 0 ? { padding: '0px' } : { padding: paddingList.join(' ') }
-    }],
-    [/^h-calc-(\w+)-(\w+)$/, ([, a, b]) => {
-      const numReg = /^((?![A-Za-z]).)*$/
-      const heightArr = [a, b].map(e => numReg.test(e) ? `${e}%` : e)
-      return { height: `calc(${heightArr[0]} - ${heightArr[1]})` }
-    }],
   ],
   transformers: [
     transformerDirectives(),
     transformerVariantGroup(),
   ],
+  theme: {
+    backgroundColors: {},
+    colors: {},
+
+  },
   safelist: 'prose prose-sm m-auto text-left'.split(' '),
 })

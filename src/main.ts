@@ -2,7 +2,7 @@
  * @Author: BY by15242952083@outlook.com
  * @Date: 2022-11-30 16:34:35
  * @LastEditors: BY by15242952083@outlook.com
- * @LastEditTime: 2022-12-16 17:51:21
+ * @LastEditTime: 2022-12-20 19:54:41
  * @FilePath: \Q2Q\src\main.ts
  * @Description: main
  * Copyright (c) 2022 by BY email: by15242952083@outlook.com, All Rights Reserved.
@@ -13,9 +13,12 @@ import Previewer from 'virtual:vue-component-preview'
 import App from './App.vue'
 import type { UserModule } from './types'
 import generatedRoutes from '~pages'
-import 'normalize.css/normalize.css'
 import './styles/css/main.css'
 import 'uno.css'
+
+import 'normalize.css/normalize.css'
+// normalize.css https://necolas.github.io/normalize.css/
+// import '@unocss/reset/normalize.css'
 
 const routes = setupLayouts(generatedRoutes)
 
