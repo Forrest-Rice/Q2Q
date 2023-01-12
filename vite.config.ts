@@ -2,7 +2,7 @@
  * @Author: BY by15242952083@outlook.com
  * @Date: 2022-11-30 16:34:35
  * @LastEditors: BY by15242952083@outlook.com
- * @LastEditTime: 2022-12-20 20:33:28
+ * @LastEditTime: 2023-01-12 11:06:32
  * @FilePath: \Q2Q\vite.config.ts
  * @Description:
  * Copyright (c) 2022 by BY email: by15242952083@outlook.com, All Rights Reserved.
@@ -200,7 +200,7 @@ export default defineConfig({
 
   css: {
     preprocessorOptions: {
-      scss: { additionalData: '@import \'~/styles/scss/mixin.scss\';' },
+      scss: { additionalData: '@import \'~/assets/styles/scss/mixin.scss\';' },
     },
     postcss: { plugins: [loader_pxToRem, loader_autoPreFixer] },
   },
@@ -209,12 +209,10 @@ export default defineConfig({
     // port: 12138,
     strictPort: true,
     open: true,
-    // https: {
-    //   key: fs.readFileSync('./keys/agent2-key.pem'),
-    //   cert: fs.readFileSync('./keys/agent2-cert.pem'),
-    // },
 
     https: false,
     hmr: true,
   },
+
+  assetsInclude: ['**/*.gltf', '**/*.hdr'],
 })

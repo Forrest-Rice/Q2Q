@@ -7,11 +7,21 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    3DImage: typeof import('./components/common/3DImage.vue')['default']
+    ElAside: typeof import('element-plus/es')['ElAside']
     ElButton: typeof import('element-plus/es')['ElButton']
+    ElContainer: typeof import('element-plus/es')['ElContainer']
+    ElFooter: typeof import('element-plus/es')['ElFooter']
+    ElHeader: typeof import('element-plus/es')['ElHeader']
+    ElMain: typeof import('element-plus/es')['ElMain']
     HelloWorld: typeof import('./components/helloWorld.vue')['default']
     PageFooter: typeof import('./components/PageFooter.vue')['default']
     PageHeader: typeof import('./components/PageHeader.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    TheFooter: typeof import('./components/TheFooter.vue')['default']
+    TheHeader: typeof import('./components/TheHeader.vue')['default']
+    TheMenu: typeof import('./components/TheMenu.vue')['default']
+    VoxelizeImage: typeof import('./components/common/voxelizeImage.vue')['default']
   }
 }

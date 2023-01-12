@@ -2,7 +2,7 @@
  * @Author: BY by15242952083@outlook.com
  * @Date: 2022-11-30 16:34:35
  * @LastEditors: BY by15242952083@outlook.com
- * @LastEditTime: 2022-12-20 19:54:41
+ * @LastEditTime: 2023-01-12 10:56:17
  * @FilePath: \Q2Q\src\main.ts
  * @Description: main
  * Copyright (c) 2022 by BY email: by15242952083@outlook.com, All Rights Reserved.
@@ -13,8 +13,10 @@ import Previewer from 'virtual:vue-component-preview'
 import App from './App.vue'
 import type { UserModule } from './types'
 import generatedRoutes from '~pages'
-import './styles/css/main.css'
+import '~/assets/styles/css/main.css'
 import 'uno.css'
+
+import 'echarts-gl'
 
 import 'normalize.css/normalize.css'
 // normalize.css https://necolas.github.io/normalize.css/

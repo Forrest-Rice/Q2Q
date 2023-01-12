@@ -14,12 +14,12 @@ export default defineConfig({
   ],
   rules: [
     [/^z-(\d+)$/, ([, d]) => ({ 'z-index': `${d}` })],
-    [/^h-(.+)$/, ([, a]) => {
+    [/^h-(\w+)$/, ([, a]) => {
       const numReg = /^((?![A-Za-z]).)*$/
       const h = numReg.test(a) ? `${a}%` : a
       return { height: h }
     }],
-    [/^w-(.+)$/, ([, a]) => {
+    [/^w-(\w+)$/, ([, a]) => {
       const numReg = /^((?![A-Za-z]).)*$/
       const w = numReg.test(a) ? `${a}%` : a
       return { width: w }
